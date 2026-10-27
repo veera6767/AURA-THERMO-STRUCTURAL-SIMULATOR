@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/* ── DESIGN TOKENS ────────────────────────────────────────── */
+@layer base {
+  :root {
+    --bg:        #000000;
+    --panel:     #05080f;
+    --panel-alt: #080c17;
+    --border:    #12356b;
+    --accent:    #2f8bff;
+    --hi:        #4cc2ff;
+    --text:      #d6ebff;
+    --dim:       #6f8fb5;
+    --warn:      #ef4444;
+    --amber:     #f59e0b;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body, #root {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+  }
+}
+
+/* ── FONTS ────────────────────────────────────────────────── */
+.font-display { font-family: 'Rajdhani', sans-serif; }
+.font-data    { font-family: 'JetBrains Mono', monospace; }
+
+/* ── APP GRID SHELL ───────────────────────────────────────── */
+/* Row 1: 56 px top bar   Row 2: flex rest */
+.app-shell {
+  display: grid;
+  grid-template-rows: 56px 1fr;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* Middle row: left sidebar | centre | right sidebar */
+.app-middle {
+  display: grid;
+  overflow: hidden;
+  min-height: 0;
+  transition: grid-template-columns 220ms cubic-bezier(.4,0,.2,1);
+}
+
+/* Centre column: sub-tab bar + canvas + bottom dock */
+.app-centre {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar {
+  background: var(--panel);
+  border-color: var(--border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.sidebar-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+.sidebar-scroll::-webkit-scrollbar { width: 3px; }
+.sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.sidebar-scroll::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ── ACCORDION ───────────────────────────────────────────── */
+.acc-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  transition: background 120ms;
+  flex-shrink: 0;
+}
+.acc-header:hover { background: var(--panel-alt); }
+.acc-body {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-alt);
+  overflow: hidden;
+}
+
+/* ── BOTTOM DOCK ─────────────────────────────────────────── */
+.bottom-dock {
+  height: 84px;
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  overflow: hidden;
+}
+
+/* ── PANEL / HUD ─────────────────────────────────────────── */
+.hud-panel {
+  background: rgba(5, 8, 15, 0.88);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+/* ── SLIDERS ──────────────────────────────────────────────── */
+input[type="range"].sl {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"].sl:hover { background: #1e4a96; }
+input[type="range"].sl::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: var(--hi);
+  border: 1.5px solid var(--accent);
+  box-shadow: 0 0 5px rgba(76,194,255,.5);
+  cursor: pointer;
+  transition: transform 120ms, box-shadow 120ms;
+}
+input[type="range"].sl::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+  box-shadow: 0 0 9px rgba(76,194,255,.85);
+}
+input[type="range"].sl::-moz-range-thumb {
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--hi); border: 1.5px solid var(--accent);
+}
+
+/* ── SEGMENTED CONTROL ──────────────────────────────────── */
+.seg { display:flex; gap:2px; padding:2px; background:#000; border:1px solid var(--border); border-radius:6px; }
+.seg-btn {
+  flex:1; padding:4px 6px; border-radius:4px;
+  font:700 10px/1 'JetBrains Mono', monospace;
+  letter-spacing:.03em; text-align:center; cursor:pointer;
+  color:var(--dim); background:transparent; border:none;
+  transition:background 120ms,color 120ms;
+}
+.seg-btn.on { background:var(--accent); color:#000; }
+.seg-btn:not(.on):hover { color:var(--text); background:rgba(47,139,255,.1); }
+
+/* ── SIDEBAR TABS ────────────────────────────────────────── */
+.r-tab {
+  flex:1; padding:9px 4px; text-align:center;
+  font:700 10px/1 'JetBrains Mono',monospace;
+  letter-spacing:.06em; cursor:pointer; color:var(--dim);
+  border-bottom:2px solid transparent;
+  transition:color 120ms, border-color 120ms;
+}
+.r-tab.on { color:var(--hi); border-bottom-color:var(--accent); }
+.r-tab:not(.on):hover { color:var(--text); }
+
+/* ── ACTIVE TAB UNDERLINE (top bar) ─────────────────────── */
+.top-tab { position:relative; }
+.top-tab.on::after {
+  content:'';
+  position:absolute;
+  bottom:-1px; left:8px; right:8px;
+  height:2px;
+  background:var(--accent);
+  border-radius:1px;
+  box-shadow:0 0 6px var(--hi);
+}
+
+/* ── CONTOUR SCAN LINE ───────────────────────────────────── */
+@keyframes cScan {
+  0%   { top:0%;   opacity:0; }
+  12%  { opacity:.85; }
+  88%  { opacity:.85; }
+  100% { top:100%; opacity:0; }
+}
+.scan-sweep {
+  position:absolute; left:0; right:0; height:1.5px; z-index:20;
+  background:linear-gradient(90deg,transparent 0%,var(--hi) 50%,transparent 100%);
+  pointer-events:none;
+  animation:cScan 380ms ease-out forwards;
+}
+
+/* ── MISC UTILITIES ──────────────────────────────────────── */
+.micro { font:400 9px/1 'JetBrains Mono',monospace; letter-spacing:.08em; color:var(--dim); text-transform:uppercase; }
+.row-lv { display:flex; align-items:center; justify-content:space-between; padding:4px 0; }
+input[type="checkbox"].cb { accent-color:var(--accent); width:13px; height:13px; cursor:pointer; flex-shrink:0; }
+select.sel {
+  width:100%; padding:6px 8px; border-radius:6px;
+  background:#000; border:1px solid var(--border);
+  color:var(--text); font:12px 'JetBrains Mono',monospace;
+  outline:none; cursor:pointer;
+  transition:border-color 120ms;
+}
+select.sel:focus { border-color:var(--accent); }
+select.sel option { background:#05080f; }
+
+/* ── ICON RAIL (collapsed sidebar) ──────────────────────── */
+.icon-rail { display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 0; }
+.rail-btn {
+  width:36px; height:36px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--dim); background:transparent; cursor:pointer;
+  transition:background 120ms, color 120ms;
+}
+.rail-btn:hover, .rail-btn.on { color:var(--hi); background:rgba(47,139,255,.1); }

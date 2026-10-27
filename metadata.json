@@ -1,0 +1,6 @@
+{
+  "name": "AURA - THERMO STRUCTURAL SIMULATOR",
+  "description": "Thermal and structural simulation viewer for an externally finned solid propellant rocket motor chamber, companion to VEERA-CADTRACK with hand gesture tracking and ANSYS Workbench 2025 R2 validation.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
